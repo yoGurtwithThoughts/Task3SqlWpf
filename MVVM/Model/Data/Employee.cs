@@ -15,7 +15,7 @@ namespace Task3SqlWpf.MVVM.Model.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surename { get; set; }
-        public PhoneAttribute Phone{ get; set; }
+        public string Phone{ get; set; }
         public int PositionId { get; set; }
         public virtual Position Position { get; set; }
         [NotMapped] public Position EmployeePos { get {

@@ -11,7 +11,7 @@ namespace Task3SqlWpf.MVVM.Model.Data
 {
     class Departament
     {
-        public string Id { get; set; }
+        public int ID { get; set; }
         public string DPName { get; set; }
         public List<Position> Positions { get; set; }
         [NotMapped]

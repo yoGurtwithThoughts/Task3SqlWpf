@@ -51,20 +51,20 @@ namespace Task3SqlWpf.MVVM.Core
             }
             #endregion
             #region Добавить Должность
-            public static string CreatePostion(string PositionName)
+            public static string CreatePostion(string positionName,decimal salary,int countMaxOfEmployees,Departament departament)
             {
                 string result = "Должность имеется";
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    bool checkISExist = db.Positions.Any(a => a.PositionName == PositionName && a.Salary == salary && a.MaxCountOfEmployees = maxCountOfEmployee);
+                    bool checkISExist = db.Positions.Any(a => a.PositionName==positionName && a.Salary==salary && a.MaxCountOfEmployees== countMaxOfEmployees);
                     if (!checkISExist)
                     {
                         db.Positions.Add(new Position
                         {
-                            PositionName = PositionName,
-                            Salary=salary,
-                            MaxCountOfEmployees= maxCountOfEmployees,
-                            DepartamentID = depotament.ID
+                            PositionName = positionName,
+                            Salary = salary,
+                            MaxCountOfEmployees= countMaxOfEmployees,
+                            DepartamentID = departament.ID
                         }) ;
                     }
                     db.SaveChanges();
@@ -76,7 +76,7 @@ namespace Task3SqlWpf.MVVM.Core
             #endregion
         }
         #region Добавить сотрудника
-        public static string CreateEmpoloyee(string Name, string Surename, string Phone, Position position)
+        public static string CreateEmpoloyee(string name, string surename, string phone, Position position)
         {
             string result = "Сотрудник уже существует!";
             using (ApplicationContext db = new ApplicationContext())
@@ -84,7 +84,8 @@ namespace Task3SqlWpf.MVVM.Core
                 bool checkISExist = db.Employees.Any(a => a.Name == name  && a.Surename == surename &&a.Phone==phone );
                 if (!checkISExist)
                 {
-                    db.Departamentes.Add(new Employee { Name= name, 
+                    db.Employees.Add(new Employee{ 
+                    Name=name,
                     Surename=surename,
                     Phone=phone,
                     PositionId=position.ID});
@@ -97,19 +98,48 @@ namespace Task3SqlWpf.MVVM.Core
 
         #endregion
         #region Удалить отдел 
-        public static string DeleteDeportament(Departament departament)
+        public static string DeleteDepartament(Departament departament)
         {
             string result = "Нет такого отдела!";
-            using (ApplicationContext db = new ApplicationContext()) ;
+            using (ApplicationContext db = new ApplicationContext())
             {
-                db.Deportaments.Remove(departament);
-                db.SaveChenge();
+                db.Departamentes.Remove(departament);
+                db.SaveChanges();
                 result = $"Отдел {departament.DPName} удален";
-            }
-        }
 
+              }
+            return result;
+        }
+        #endregion
+        #region Удалить сотрудника 
+        public static string DeleteEmploy(Employee employ)
+        {
+            string result = "Нет такого отдела!";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Employees.Remove(employ);
+                db.SaveChanges();
+                result = $"Отдел {employ.Name} удален";
+
+            }
+            return result;
+        }
         #endregion
     }
-}
+    #region Удалить должность 
+    public static string DeletePositio(Position position)
+    {
+        string result = "Нет такой должности!";
+        using (ApplicationContext db = new ApplicationContext())
+        {
+            db.Positions.Remove(position);
+            db.SaveChanges();
+            result = $"Отдел {position.PositionName} удален";
+
+        }
+        return result;
+    }
     #endregion
+
 }
+#endregion
