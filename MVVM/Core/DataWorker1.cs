@@ -75,24 +75,40 @@ namespace Task3SqlWpf.MVVM.Core
 
             #endregion
         }
-        //#region Добавить сотрудника
-        //public static string CreateEmpoloyee(string Name,string Surename, string Phone, Position position)
-        //{
-        //    string result = "Отдел уже существует!";
-        //    using (ApplicationContext db = new ApplicationContext())
-        //    {
-        //        bool checkISExist = db.Departamentes.Any(a => a.DPName == );
-        //        if (!checkISExist)
-        //        {
-        //            db.Departamentes.Add(new Departament { DPName = PositionName });
-        //        }
-        //        db.SaveChanges();
-        //        result = "Успешно добавлено!";
-        //        return result;
-        //    }
-        //}
-   
-        //#endregion
+        #region Добавить сотрудника
+        public static string CreateEmpoloyee(string Name, string Surename, string Phone, Position position)
+        {
+            string result = "Сотрудник уже существует!";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                bool checkISExist = db.Employees.Any(a => a.Name == name  && a.Surename == surename &&a.Phone==phone );
+                if (!checkISExist)
+                {
+                    db.Departamentes.Add(new Employee { Name= name, 
+                    Surename=surename,
+                    Phone=phone,
+                    PositionId=position.ID});
+                }
+                db.SaveChanges();
+                result = "Успешно добавлено!";
+                return result;
+            }
+        }
+
+        #endregion
+        #region Удалить отдел 
+        public static string DeleteDeportament(Departament departament)
+        {
+            string result = "Нет такого отдела!";
+            using (ApplicationContext db = new ApplicationContext()) ;
+            {
+                db.Deportaments.Remove(departament);
+                db.SaveChenge();
+                result = $"Отдел {departament.DPName} удален";
+            }
+        }
+
+        #endregion
     }
 }
     #endregion
